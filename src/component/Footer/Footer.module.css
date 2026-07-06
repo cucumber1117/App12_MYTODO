@@ -1,0 +1,22 @@
+.footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 64px;
+    background-color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #ddd;
+}
+
+.footerLink{
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.footerLink:hover{
+    font-weight: bold;
+}
