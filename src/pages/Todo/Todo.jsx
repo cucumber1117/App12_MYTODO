@@ -3,9 +3,13 @@ import styles from './Todo.module.css';
 
 function Todo() {
 
-    const [inputText,setInputText] = useState(' ');
+    const [inputText,setInputText] = useState('');
     const [inputDate,setInputDate] = useState('');
-    const [todos,setTodos] = useState([]);
+    const [inputTime,setInputTime] = useState('');
+    const [todos,setTodos] = useState(() => {
+        const savedTodos = localStorage.getItem('todos');
+        return savedTodos ? JSON.parse(savedTodos) : [];
+    });
 
     const handleAddTodo = () => {
         if (inputText.trim() === '') {
@@ -15,12 +19,22 @@ function Todo() {
         id: Date.now(),
         text: inputText,
         date: inputDate,
+        time: inputTime,
         };
 
-        setTodos([...todos,newTodo]);
+        const newTodos=([...todos,newTodo]);
+        setTodos(newTodos);
+        localStorage.setItem('todos',JSON.stringify(newTodos));
         setInputText('');
         setInputDate('');
+        setInputTime('');
 
+    };
+
+    const handleDeleteTodo = (id) => {
+        const newTodos = todos.filter((todo) => todo.id !== id);
+        setTodos(newTodos);
+        localStorage.setItem('todos', JSON.stringify(newTodos));
     };
 
     return (
@@ -38,10 +52,15 @@ function Todo() {
                     />
                     <input
                     className={styles.input}
-                    type="text"
-                    placeholder="期限"
+                    type="date"
                     value={inputDate}
                     onChange={(e) => setInputDate(e.target.value)}
+                    />
+                    <input
+                    className={styles.input}
+                    type="time"
+                    value={inputTime}
+                    onChange={(e) => setInputTime(e.target.value)}
                     />
                     <button className={styles.button} onClick={handleAddTodo} >追加</button>
                 </div>
@@ -51,7 +70,8 @@ function Todo() {
                     <li className={styles.todoItem} key={todo.id} >
                         <div className={styles.todoContent}>
                             <span className={styles.todoText}>{todo.text}</span>
-                            <span className={styles.todoDate}>{todo.date}</span>
+                            <span className={styles.todoDate}>{todo.date}{todo.time}</span>
+                            <button className={styles.deleteButton} onClick={() => handleDeleteTodo(todo.id)} >削除</button>
                         </div>
                     </li>
                     ))}
