@@ -7,6 +7,7 @@ padding-bottom: 80px;
 }
 
 .home{
+box-sizing: border-box;
 width: 400px;
 margin: 0 auto;
 padding: 24px;
@@ -53,6 +54,11 @@ white-space: nowrap;
 
 .button:hover{
   background-color: #4338ca;
+}
+
+.button:disabled{
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .todoList{

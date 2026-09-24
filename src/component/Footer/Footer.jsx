@@ -7,9 +7,6 @@ function Footer() {
             <Link className={styles.footerLink} to="/">
             ホーム
             </Link>
-            <Link className={styles.footerLink} to="/todo">
-            Todo
-            </Link>
             <Link className={styles.footerLink} to="/setting">
             設定
             </Link>
