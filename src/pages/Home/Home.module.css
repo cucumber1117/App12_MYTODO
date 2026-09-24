@@ -63,8 +63,18 @@ white-space: nowrap;
 
 .todoList{
 padding: 0;
-margin-top: 24px;
+margin: 12px 0 0;
 list-style: none;
+}
+
+.periodSection{
+  margin-top: 24px;
+  text-align: left;
+}
+
+.emptyPeriod{
+  font-size: 14px;
+  color: #666;
 }
 
 .todoItem{
@@ -87,11 +97,13 @@ border-radius: 8px;
 
 .todoText{
   font-size: 16px;
+  overflow-wrap: anywhere;
 }
 
 .todoDate{
   font-size: 14px;
   color: #666;
+  white-space: nowrap;
 }
 
 .deleteButton{

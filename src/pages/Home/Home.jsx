@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import styles from './Home.module.css'
+import { getEnabledPeriods, getDisplayPeriod, getPeriodFromTime } from './periods.js';
 
-function Home() {
+function Home({ periodSettings }) {
+    const enabledPeriods = getEnabledPeriods(periodSettings);
 
     const [todos, setTodos] = useState(() => {
         const savedTodos = localStorage.getItem('todos');
@@ -20,29 +22,36 @@ function Home() {
     const [isAdding, setIsAdding] = useState(false);
     const [inputText, setInputText] = useState('');
     const [inputDate, setInputDate] = useState(getToday);
+    const [inputPeriod, setInputPeriod] = useState(enabledPeriods[0]);
+    const [isTimeEnabled, setIsTimeEnabled] = useState(false);
     const [inputTime, setInputTime] = useState('');
     const [message, setMessage] = useState('');
 
     const handleAddTodo = (event) => {
         event.preventDefault();
-        if (!inputText.trim() || !inputDate) return;
+        if (!inputText.trim() || !inputDate || (isTimeEnabled && !inputTime)) return;
 
         const newTodos = [...todos, {
             id: crypto.randomUUID(),
             text: inputText.trim(),
             date: inputDate,
-            time: inputTime,
+            period: isTimeEnabled ? getPeriodFromTime(inputTime) : inputPeriod,
+            time: isTimeEnabled ? inputTime : '',
         }];
         localStorage.setItem('todos', JSON.stringify(newTodos));
         setTodos(newTodos);
         setMessage(`${inputDate}の予定を追加しました。`);
         setInputText('');
         setInputDate(getToday());
+        setInputPeriod(enabledPeriods[0]);
+        setIsTimeEnabled(false);
         setInputTime('');
         setIsAdding(false);
     };
 
     const selectedTodos = todos.filter((todo) => todo.date === selectedDate);
+    const visiblePeriods = selectedTodos.some((todo) => getDisplayPeriod(todo, periodSettings) === '未分類')
+        ? [...enabledPeriods, '未分類'] : enabledPeriods;
 
     return (
         <div className={styles.page}>
@@ -66,23 +75,51 @@ function Home() {
                         <label htmlFor="todo-date">日付</label>
                         <input id="todo-date" className={styles.input} type="date" required
                             value={inputDate} onChange={(event) => setInputDate(event.target.value)} />
-                        <label htmlFor="todo-time">時刻（任意）</label>
-                        <input id="todo-time" className={styles.input} type="time"
-                            value={inputTime} onChange={(event) => setInputTime(event.target.value)} />
+                        {!isTimeEnabled && <>
+                        <label htmlFor="todo-period">時間帯</label>
+                        <select id="todo-period" className={styles.input}
+                            value={inputPeriod} onChange={(event) => setInputPeriod(event.target.value)}>
+                            {enabledPeriods.map((period) => (
+                                <option key={period} value={period}>{period}</option>
+                            ))}
+                        </select>
+                        </>}
+                        <button className={styles.button} type="button"
+                            aria-expanded={isTimeEnabled} aria-controls="todo-time-details"
+                            onClick={() => setIsTimeEnabled(!isTimeEnabled)}>
+                            {isTimeEnabled ? '時間帯の選択に戻る' : '時間を選択'}
+                        </button>
+                        {isTimeEnabled && (
+                            <div id="todo-time-details" className={styles.inputArea}>
+                                <label htmlFor="todo-time">時刻</label>
+                                <input id="todo-time" className={styles.input} type="time" required
+                                    value={inputTime} onChange={(event) => setInputTime(event.target.value)} />
+                            </div>
+                        )}
                         <button className={styles.button} type="submit" disabled={!inputText.trim()}>追加</button>
                     </form>
                 )}
                 <p role="status">{message}</p>
-                <ul className={styles.todoList}>
-                    {selectedTodos.map((todo) => (
+                {visiblePeriods.map((period) => (
+                    <section className={styles.periodSection} key={period}>
+                        <h2>{period}</h2>
+                        <ul className={styles.todoList}>
+                    {selectedTodos.filter((todo) => getDisplayPeriod(todo, periodSettings) === period)
+                        .sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'))
+                        .map((todo) => (
                     <li className={styles.todoItem} key={todo.id} >
                         <div className={styles.todoContent}>
                             <span className={styles.todoText}>{todo.text}</span>
-                            <span className={styles.todoDate}>{todo.date} {todo.time}</span>
+                            {todo.time && <time className={styles.todoDate} dateTime={`${todo.date}T${todo.time}`}>{todo.time}</time>}
                         </div>
                     </li>
                     ))}
-                </ul>
+                        </ul>
+                        {!selectedTodos.some((todo) => getDisplayPeriod(todo, periodSettings) === period) && (
+                            <p className={styles.emptyPeriod}>予定はありません</p>
+                        )}
+                    </section>
+                ))}
             </div>
         </div>
     )

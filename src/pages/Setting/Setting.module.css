@@ -1,0 +1,34 @@
+.page {
+  padding: 80px 16px;
+}
+
+.panel {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.options {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  cursor: pointer;
+}
+
+.option input {
+  width: 20px;
+  height: 20px;
+  accent-color: #58a8c7;
+}
+
+.description {
+  margin-top: 16px;
+  font-size: 14px;
+}
