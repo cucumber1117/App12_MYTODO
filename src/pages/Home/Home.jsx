@@ -20,6 +20,9 @@ function Home({ periodSettings }) {
     };
 
     const selectedDate = getToday();
+    const today = new Date();
+    const dateLabel = new Intl.DateTimeFormat('ja-JP', { month: 'long', day: 'numeric' }).format(today);
+    const weekday = new Intl.DateTimeFormat('ja-JP', { weekday: 'long' }).format(today);
     const [isAdding, setIsAdding] = useState(false);
     const [selectedTodo, setSelectedTodo] = useState(null);
     const [inputText, setInputText] = useState('');
@@ -58,21 +61,28 @@ function Home({ periodSettings }) {
     return (
         <div className={styles.page}>
             <div className={styles.home}>
-                <h1 className={styles.title}>今日のタスク</h1>
+                <header className={styles.pageHeader}>
+                    <p className={styles.eyebrow}>MY TODO <span>DAILY PLANNER</span></p>
+                    <div className={styles.headingRow}>
+                        <div><p className={styles.dateLabel}>{dateLabel}・{weekday}</p><h1 className={styles.title}>今日の予定<span>。</span></h1></div>
+                        <div className={styles.calendarBadge} aria-hidden="true"><span>{today.getMonth() + 1}月</span><strong>{today.getDate()}</strong></div>
+                    </div>
+                    <div className={styles.summary}><span>今日</span><p>{selectedTodos.length}件の予定</p></div>
+                </header>
                 <button
-                    className={styles.button}
+                    className={styles.addButton}
                     type="button"
                     aria-haspopup="dialog"
                     onClick={() => setIsAdding(true)}
                 >
-                    ＋ 予定追加
+                    <span aria-hidden="true">＋</span> 予定追加
                 </button>
                 {isAdding && (
                     <BottomSheet title="予定追加" titleId="add-todo-title" onClose={() => setIsAdding(false)}>
                     <form id="add-todo-form" className={styles.inputArea} onSubmit={handleAddTodo}>
                         <label htmlFor="todo-text">予定</label>
                         <input id="todo-text" className={styles.input} type="text"
-                            placeholder="やることを入力" required
+                            placeholder="どんな予定ですか？" required
                             value={inputText} onChange={(event) => setInputText(event.target.value)} />
                         <label htmlFor="todo-date">日付</label>
                         <input id="todo-date" className={styles.input} type="date" required
@@ -86,7 +96,7 @@ function Home({ periodSettings }) {
                             ))}
                         </select>
                         </>}
-                        <button className={styles.button} type="button"
+                        <button className={styles.secondaryButton} type="button"
                             aria-expanded={isTimeEnabled} aria-controls="todo-time-details"
                             onClick={() => setIsTimeEnabled(!isTimeEnabled)}>
                             {isTimeEnabled ? '時間帯の選択に戻る' : '時間を選択'}
@@ -98,14 +108,14 @@ function Home({ periodSettings }) {
                                     value={inputTime} onChange={(event) => setInputTime(event.target.value)} />
                             </div>
                         )}
-                        <button className={styles.button} type="submit" disabled={!inputText.trim()}>追加</button>
+                        <button className={styles.button} type="submit" disabled={!inputText.trim()}>予定を追加</button>
                     </form>
                     </BottomSheet>
                 )}
-                <p role="status">{message}</p>
+                <p className={styles.status} role="status">{message}</p>
                 {visiblePeriods.map((period) => (
                     <section className={styles.periodSection} key={period}>
-                        <h2>{period}</h2>
+                        <div className={styles.sectionHeading}><h2><span className={styles.periodMark} aria-hidden="true" />{period}</h2><span>{selectedTodos.filter((todo) => getDisplayPeriod(todo, periodSettings) === period).length}件</span></div>
                         <ul className={styles.todoList}>
                     {selectedTodos.filter((todo) => getDisplayPeriod(todo, periodSettings) === period)
                         .sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'))
@@ -113,14 +123,15 @@ function Home({ periodSettings }) {
                     <li className={styles.todoItem} key={todo.id} >
                         <button type="button" className={styles.todoContent}
                             aria-haspopup="dialog" onClick={() => setSelectedTodo(todo)}>
+                            <span className={styles.todoDate}>{todo.time ? <time dateTime={`${todo.date}T${todo.time}`}>{todo.time}</time> : period}</span>
                             <span className={styles.todoText}>{todo.text}</span>
-                            {todo.time && <time className={styles.todoDate} dateTime={`${todo.date}T${todo.time}`}>{todo.time}</time>}
+                            <span className={styles.chevron} aria-hidden="true">›</span>
                         </button>
                     </li>
                     ))}
                         </ul>
                         {!selectedTodos.some((todo) => getDisplayPeriod(todo, periodSettings) === period) && (
-                            <p className={styles.emptyPeriod}>予定はありません</p>
+                            <div className={styles.emptyPeriod}><span aria-hidden="true">—</span><p>予定はありません<small>余白のある時間も、大切に。</small></p></div>
                         )}
                     </section>
                 ))}
