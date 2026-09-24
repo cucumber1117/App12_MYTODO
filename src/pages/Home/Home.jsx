@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './Home.module.css'
+import BottomSheet from '../../component/BottomSheet/BottomSheet.jsx';
 import { getEnabledPeriods, getDisplayPeriod, getPeriodFromTime } from './periods.js';
 
 function Home({ periodSettings }) {
@@ -20,6 +21,7 @@ function Home({ periodSettings }) {
 
     const selectedDate = getToday();
     const [isAdding, setIsAdding] = useState(false);
+    const [selectedTodo, setSelectedTodo] = useState(null);
     const [inputText, setInputText] = useState('');
     const [inputDate, setInputDate] = useState(getToday);
     const [inputPeriod, setInputPeriod] = useState(enabledPeriods[0]);
@@ -60,13 +62,13 @@ function Home({ periodSettings }) {
                 <button
                     className={styles.button}
                     type="button"
-                    aria-expanded={isAdding}
-                    aria-controls="add-todo-form"
-                    onClick={() => setIsAdding(!isAdding)}
+                    aria-haspopup="dialog"
+                    onClick={() => setIsAdding(true)}
                 >
-                    {isAdding ? '閉じる' : '＋ 予定追加'}
+                    ＋ 予定追加
                 </button>
                 {isAdding && (
+                    <BottomSheet title="予定追加" titleId="add-todo-title" onClose={() => setIsAdding(false)}>
                     <form id="add-todo-form" className={styles.inputArea} onSubmit={handleAddTodo}>
                         <label htmlFor="todo-text">予定</label>
                         <input id="todo-text" className={styles.input} type="text"
@@ -98,6 +100,7 @@ function Home({ periodSettings }) {
                         )}
                         <button className={styles.button} type="submit" disabled={!inputText.trim()}>追加</button>
                     </form>
+                    </BottomSheet>
                 )}
                 <p role="status">{message}</p>
                 {visiblePeriods.map((period) => (
@@ -108,10 +111,11 @@ function Home({ periodSettings }) {
                         .sort((a, b) => (a.time || '99:99').localeCompare(b.time || '99:99'))
                         .map((todo) => (
                     <li className={styles.todoItem} key={todo.id} >
-                        <div className={styles.todoContent}>
+                        <button type="button" className={styles.todoContent}
+                            aria-haspopup="dialog" onClick={() => setSelectedTodo(todo)}>
                             <span className={styles.todoText}>{todo.text}</span>
                             {todo.time && <time className={styles.todoDate} dateTime={`${todo.date}T${todo.time}`}>{todo.time}</time>}
-                        </div>
+                        </button>
                     </li>
                     ))}
                         </ul>
@@ -120,6 +124,16 @@ function Home({ periodSettings }) {
                         )}
                     </section>
                 ))}
+                {selectedTodo && (
+                    <BottomSheet title="予定の詳細" titleId="todo-detail-title" onClose={() => setSelectedTodo(null)}>
+                        <p className={styles.detailTitle}>{selectedTodo.text}</p>
+                        <dl className={styles.details}>
+                            <dt>日付</dt><dd>{selectedTodo.date}</dd>
+                            <dt>時間帯</dt><dd>{getDisplayPeriod(selectedTodo, periodSettings)}</dd>
+                            <dt>時刻</dt><dd>{selectedTodo.time || '指定なし'}</dd>
+                        </dl>
+                    </BottomSheet>
+                )}
             </div>
         </div>
     )
