@@ -1,11 +1,28 @@
 import { useState } from 'react';
 import styles from './Todo.module.css';
 
+const getToday = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+
+        return `${year}-${month}-${day}`;
+    };  
+
+const getCurrentTime = () => {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+    return `${hours}:${minutes}`;
+};
+
 function Todo() {
 
     const [inputText,setInputText] = useState('');
-    const [inputDate,setInputDate] = useState('');
-    const [inputTime,setInputTime] = useState('');
+    const [inputDate,setInputDate] = useState(getToday());
+    const [inputTime,setInputTime] = useState(getCurrentTime());
     const [todos,setTodos] = useState(() => {
         const savedTodos = localStorage.getItem('todos');
         return savedTodos ? JSON.parse(savedTodos) : [];
@@ -26,8 +43,8 @@ function Todo() {
         setTodos(newTodos);
         localStorage.setItem('todos',JSON.stringify(newTodos));
         setInputText('');
-        setInputDate('');
-        setInputTime('');
+        setInputDate(getToday());
+        setInputTime(getCurrentTime());
 
     };
 
