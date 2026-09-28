@@ -2,8 +2,10 @@ import { useState } from 'react';
 import styles from './Home.module.css'
 import BottomSheet from '../../component/BottomSheet/BottomSheet.jsx';
 import { getEnabledPeriods, getDisplayPeriod, getPeriodFromTime } from './periods.js';
+import DatePicker from './DatePicker.jsx';
+import { formatDate, parseDate } from './dates.js';
 
-function Home({ periodSettings }) {
+function Home({ periodSettings, isDateList = false }) {
     const enabledPeriods = getEnabledPeriods(periodSettings);
 
     const [todos, setTodos] = useState(() => {
@@ -11,22 +13,15 @@ function Home({ periodSettings }) {
         return savedTodos ? JSON.parse(savedTodos) : [];
     });
 
-    const getToday= () => {
-        const today = new Date();
-        const year = today.getFullYear();
-        const month =String(today.getMonth()+1).padStart(2,'0');
-        const day =String(today.getDate()).padStart(2,'0');
-        return `${year}-${month}-${day}`;
-    };
-
-    const selectedDate = getToday();
-    const today = new Date();
-    const dateLabel = new Intl.DateTimeFormat('ja-JP', { month: 'long', day: 'numeric' }).format(today);
-    const weekday = new Intl.DateTimeFormat('ja-JP', { weekday: 'long' }).format(today);
+    const [browsedDate, setBrowsedDate] = useState(() => formatDate(new Date()));
+    const selectedDate = isDateList ? browsedDate : formatDate(new Date());
+    const date = parseDate(selectedDate);
+    const dateLabel = new Intl.DateTimeFormat('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }).format(date);
+    const weekday = new Intl.DateTimeFormat('ja-JP', { weekday: 'long' }).format(date);
     const [isAdding, setIsAdding] = useState(false);
     const [selectedTodo, setSelectedTodo] = useState(null);
     const [inputText, setInputText] = useState('');
-    const [inputDate, setInputDate] = useState(getToday);
+    const [inputDate, setInputDate] = useState(selectedDate);
     const [inputPeriod, setInputPeriod] = useState(enabledPeriods[0]);
     const [isTimeEnabled, setIsTimeEnabled] = useState(false);
     const [inputTime, setInputTime] = useState('');
@@ -47,7 +42,8 @@ function Home({ periodSettings }) {
         setTodos(newTodos);
         setMessage(`${inputDate}の予定を追加しました。`);
         setInputText('');
-        setInputDate(getToday());
+        if (isDateList) setBrowsedDate(inputDate);
+        setInputDate(selectedDate);
         setInputPeriod(enabledPeriods[0]);
         setIsTimeEnabled(false);
         setInputTime('');
@@ -64,16 +60,17 @@ function Home({ periodSettings }) {
                 <header className={styles.pageHeader}>
                     <p className={styles.eyebrow}>MY TODO <span>DAILY PLANNER</span></p>
                     <div className={styles.headingRow}>
-                        <div><p className={styles.dateLabel}>{dateLabel}・{weekday}</p><h1 className={styles.title}>今日の予定<span>。</span></h1></div>
-                        <div className={styles.calendarBadge} aria-hidden="true"><span>{today.getMonth() + 1}月</span><strong>{today.getDate()}</strong></div>
+                        <div><p className={styles.dateLabel}>{dateLabel}・{weekday}</p><h1 className={styles.title}>{isDateList ? '予定一覧' : '今日の予定'}<span>。</span></h1></div>
+                        <div className={styles.calendarBadge} aria-hidden="true"><span>{date.getMonth() + 1}月</span><strong>{date.getDate()}</strong></div>
                     </div>
-                    <div className={styles.summary}><span>今日</span><p>{selectedTodos.length}件の予定</p></div>
+                    {isDateList && <DatePicker selectedDate={selectedDate} todos={todos} onSelect={(value) => { setBrowsedDate(value); setMessage(''); }} />}
+                    <div className={styles.summary}><span>{isDateList ? `${date.getMonth() + 1}月${date.getDate()}日（${weekday}）` : '今日'}</span><p>{selectedTodos.length}件の予定</p></div>
                 </header>
                 <button
                     className={styles.addButton}
                     type="button"
                     aria-haspopup="dialog"
-                    onClick={() => setIsAdding(true)}
+                    onClick={() => { setInputDate(selectedDate); setIsAdding(true); }}
                 >
                     <span aria-hidden="true">＋</span> 予定追加
                 </button>

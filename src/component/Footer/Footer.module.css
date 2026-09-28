@@ -4,3 +4,4 @@
 .footerLink svg circle { fill: white; }
 .active { background: var(--accent-soft); color: var(--accent); }
 .footerLink:hover { color: var(--accent); }
+@media (max-width: 380px) { .footerLink { gap: 5px; } .footerLink svg { width: 19px; height: 19px; } }

@@ -16,7 +16,8 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path="/" element={<Home periodSettings={periodSettings} />} />
+        <Route path="/" element={<Home key="home" periodSettings={periodSettings} />} />
+        <Route path="/list" element={<Home key="list" periodSettings={periodSettings} isDateList />} />
         <Route path="/todo" element={<Navigate to="/" replace />} />
         <Route path="/setting" element={<Setting periodSettings={periodSettings} onPeriodSettingsChange={updatePeriodSettings} />}/>
       </Routes>

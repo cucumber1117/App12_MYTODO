@@ -8,6 +8,10 @@ function Footer() {
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="16" rx="3"/><path d="M8 3v4m8-4v4M4 11h16m-11 5h2"/></svg>
             ホーム
             </NavLink>
+            <NavLink className={({ isActive }) => `${styles.footerLink} ${isActive ? styles.active : ''}`} to="/list">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6h11M9 12h11M9 18h11M4 6h1M4 12h1M4 18h1"/></svg>
+            一覧
+            </NavLink>
             <NavLink className={({ isActive }) => `${styles.footerLink} ${isActive ? styles.active : ''}`} to="/setting">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 17h16"/><circle cx="9" cy="7" r="3"/><circle cx="15" cy="17" r="3"/></svg>
             設定
