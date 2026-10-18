@@ -10,7 +10,6 @@ function Setting({ periodSettings, onPeriodSettingsChange }) {
   return (
     <div className={styles.page}>
       <div className={styles.panel}>
-        <p className={styles.eyebrow}>PREFERENCES</p>
         <h1>設定</h1>
         <fieldset className={styles.options}>
           <legend>表示する時間帯</legend>
