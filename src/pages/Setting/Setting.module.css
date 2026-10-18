@@ -1,25 +1,158 @@
-.page { padding: 56px 24px 130px; }
-.panel { max-width: 680px; margin: 0 auto; }
-.eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .12em; color: var(--accent); margin-bottom: 32px; }
-.panel h1 span { color: var(--accent); }
-.intro { color: var(--text); font-size: .875rem; margin: 12px 0 36px; }
-.options { border: 0; margin: 0; padding: 0; min-width: 0; }
-.options legend { font-weight: 600; margin: 0 0 14px 4px; }
-.option { display: flex; justify-content: space-between; align-items: center; gap: 20px; padding: 24px; background: white; cursor: pointer; }
-.option:first-of-type { border-radius: 18px 18px 0 0; border-bottom: 1px solid var(--border); }
-.option:last-of-type { border-radius: 0 0 18px 18px; }
-.optionText { font-weight: 550; }
-.optionText small { display: block; color: var(--text); font-size: .8rem; font-weight: 400; margin-top: 5px; }
-.option input { appearance: none; flex-shrink: 0; width: 48px; height: 28px; margin: 0; border-radius: 20px; background: #d6dce5; position: relative; cursor: pointer; transition: background .15s; }
-.option input::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; border-radius: 50%; background: white; box-shadow: 0 1px 4px #0002; transition: transform .15s; }
-.option input:checked { background: var(--accent); }
-.option input:checked::after { transform: translateX(20px); }
-.description { margin: 18px 4px 0; font-size: .875rem; color: var(--text); line-height: 1.8; }
-.recurring { margin-top: 40px; }
-.addRecurring { display: inline-block; padding: 12px 0; margin: 12px 0; color: var(--accent); text-decoration: none; }
-.recurringList { list-style: none; padding: 0; margin: 0; }
-.recurringList li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px; margin-bottom: 10px; background: white; border-radius: 16px; }
-.recurringList strong { overflow-wrap: anywhere; }
-.recurringList p, .recurringList li > span { font-size: .875rem; color: var(--text); }
-.recurringList button { flex-shrink: 0; padding: 10px; min-height: 44px; border: 1px solid var(--border); border-radius: 10px; background: var(--code-bg); color: var(--text-h); }
-@media (max-width: 520px) { .page { padding: 32px 22px 130px; } .option { padding: 22px 18px; } }
+.page {
+padding: 56px 24px 130px;
+}
+
+.panel {
+max-width: 680px;
+margin: 0 auto;
+}
+
+.eyebrow {
+font-size: .8rem;
+font-weight: 700;
+letter-spacing: .12em;
+color: var(--accent);
+margin-bottom: 32px;
+}
+
+.options {
+border: 0;
+margin: 0;
+padding: 0;
+min-width: 0;
+}
+
+.options legend {
+font-weight: 600;
+margin: 0 0 14px 4px;
+}
+
+.option {
+display: flex;
+justify-content: space-between;
+align-items: center;
+gap: 20px;
+padding: 24px;
+background: white;
+cursor: pointer;
+}
+
+.option:first-of-type {
+border-radius: 18px 18px 0 0;
+border-bottom: 1px solid var(--border);
+}
+
+.option:last-of-type {
+border-radius: 0 0 18px 18px;
+}
+
+.optionText {
+font-weight: 550;
+}
+
+.optionText small {
+display: block;
+color: var(--text);
+font-size: .8rem;
+font-weight: 400;
+margin-top: 5px;
+}
+
+.option input {
+appearance: none;
+flex-shrink: 0;
+width: 48px;
+height: 28px;
+margin: 0;
+border-radius: 20px;
+background: #d6dce5;
+position: relative;
+cursor: pointer;
+transition: background .15s;
+}
+
+.option input::after {
+content: '';
+position: absolute;
+top: 3px;
+left: 3px;
+width: 22px;
+height: 22px;
+border-radius: 50%;
+background: white;
+box-shadow: 0 1px 4px #0002;
+transition: transform .15s;
+}
+
+.option input:checked {
+background: var(--accent);
+}
+
+.option input:checked::after {
+transform: translateX(20px);
+}
+
+.description {
+margin: 18px 4px 0;
+font-size: .875rem;
+color: var(--text);
+line-height: 1.8;
+}
+
+.recurring {
+margin-top: 40px;
+}
+
+.addRecurring {
+display: inline-block;
+padding: 12px 0;
+margin: 12px 0;
+color: var(--accent);
+text-decoration: none;
+}
+
+.recurringList {
+list-style: none;
+padding: 0;
+margin: 0;
+}
+
+.recurringList li {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 16px;
+padding: 20px;
+margin-bottom: 10px;
+background: white;
+border-radius: 16px;
+}
+
+.recurringList strong {
+overflow-wrap: anywhere;
+}
+
+.recurringList p, .recurringList li > span {
+font-size: .875rem;
+color: var(--text);
+}
+
+.recurringList button {
+flex-shrink: 0;
+padding: 10px;
+min-height: 44px;
+border: 1px solid var(--border);
+border-radius: 10px;
+background: var(--code-bg);
+color: var(--text-h);
+}
+
+@media (max-width: 520px) {
+.page {
+padding: 32px 22px 130px;
+}
+ .option {
+padding: 22px 18px;
+}
+
+}

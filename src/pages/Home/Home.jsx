@@ -73,7 +73,7 @@ function Home({ periodSettings, isDateList = false }) {
                 <header className={styles.pageHeader}>
                     <p className={styles.eyebrow}>MY TODO <span>DAILY PLANNER</span></p>
                     <div className={styles.headingRow}>
-                        <div><p className={styles.dateLabel}>{dateLabel}・{weekday}</p><h1 className={styles.title}>{isDateList ? '予定一覧' : '今日の予定'}<span>。</span></h1></div>
+                        <div><p className={styles.dateLabel}>{dateLabel}・{weekday}</p><h1 className={styles.title}>{isDateList ? '予定一覧' : '今日の予定'}</h1></div>
                         <div className={styles.calendarBadge} aria-hidden="true"><span>{date.getMonth() + 1}月</span><strong>{date.getDate()}</strong></div>
                     </div>
                     {isDateList && <DatePicker selectedDate={selectedDate} todos={todos} onSelect={(value) => { setBrowsedDate(value); setMessage(''); }} />}

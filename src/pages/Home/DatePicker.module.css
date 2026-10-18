@@ -1,15 +1,119 @@
-.picker { margin: 24px 0; }
-.controls { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
-.controls > button { width: 44px; height: 44px; flex-shrink: 0; border: 1px solid var(--border); border-radius: 12px; background: white; color: var(--text-h); font-size: 1.6rem; }
-.dateLabel { display: flex; flex-direction: column; gap: 4px; min-width: 0; font-size: .875rem; color: var(--text); text-align: center; }
-.dateLabel input { max-width: 100%; min-width: 0; min-height: 44px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 10px; background: white; color: var(--text-h); }
-.week { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
-.day { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 12px 2px; border: 1px solid transparent; border-radius: 14px; color: var(--text); background: white; }
-.day > span { font-size: .875rem; }
-.day strong { font-size: 1.2rem; color: var(--text-h); font-weight: 600; }
-.day small { font-size: .75rem; }
-.day:hover { border-color: var(--accent); }
-.selected { background: var(--accent); color: white; }
-.selected strong { color: white; }
-.today { display: block; margin: 12px 0 0 auto; min-height: 44px; padding: 8px 0 8px 12px; border: 0; background: none; color: var(--accent); font-size: .875rem; }
-@media (max-width: 380px) { .week { gap: 3px; } .day { border-radius: 10px; } }
+.picker {
+margin: 24px 0;
+}
+
+
+.controls {
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 12px;
+margin-bottom: 18px;
+}
+
+
+.controls > button {
+width: 44px;
+height: 44px;
+flex-shrink: 0;
+border: 1px solid var(--border);
+border-radius: 12px;
+background: white;
+color: var(--text-h);
+font-size: 1.6rem;
+}
+
+
+.dateLabel {
+display: flex;
+flex-direction: column;
+gap: 4px;
+min-width: 0;
+font-size: .875rem;
+color: var(--text);
+text-align: center;
+}
+
+
+.dateLabel input {
+max-width: 100%;
+min-width: 0;
+min-height: 44px;
+padding: 6px 10px;
+border: 1px solid var(--border);
+border-radius: 10px;
+background: white;
+color: var(--text-h);
+}
+
+
+.week {
+display: grid;
+grid-template-columns: repeat(7, minmax(0, 1fr));
+gap: 6px;
+}
+
+
+.day {
+display: flex;
+flex-direction: column;
+align-items: center;
+gap: 4px;
+padding: 12px 2px;
+border: 1px solid transparent;
+border-radius: 14px;
+color: var(--text);
+background: white;
+}
+
+
+.day > span {
+font-size: .875rem;
+}
+
+.day strong {
+font-size: 1.2rem;
+color: var(--text-h);
+font-weight: 600;
+}
+
+.day small {
+font-size: .75rem;
+}
+
+.day:hover {
+border-color: var(--accent);
+}
+
+.selected {
+background: var(--accent);
+color: white;
+}
+
+.selected strong {
+color: white;
+}
+
+
+.today {
+display: block;
+margin: 12px 0 0 auto;
+min-height: 44px;
+padding: 8px 0 8px 12px;
+border: 0;
+background: none;
+color: var(--accent);
+font-size: .875rem;
+}
+
+
+@media (max-width: 380px) {
+.week {
+gap: 3px;
+}
+
+  .day {
+border-radius: 10px;
+}
+
+}

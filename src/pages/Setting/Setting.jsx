@@ -11,8 +11,7 @@ function Setting({ periodSettings, onPeriodSettingsChange }) {
     <div className={styles.page}>
       <div className={styles.panel}>
         <p className={styles.eyebrow}>PREFERENCES</p>
-        <h1>設定<span>。</span></h1>
-        <p className={styles.intro}>自分のリズムに合わせて。</p>
+        <h1>設定</h1>
         <fieldset className={styles.options}>
           <legend>表示する時間帯</legend>
           <label className={styles.option}>
