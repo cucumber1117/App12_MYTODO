@@ -1,5 +1,6 @@
 import { formatDate, parseDate, shiftDate } from './dates.js';
 import styles from './DatePicker.module.css';
+import { occursOn } from '../../tasks.js';
 
 export default function DatePicker({ selectedDate, onSelect, todos }) {
     const today = formatDate(new Date());
@@ -21,7 +22,7 @@ export default function DatePicker({ selectedDate, onSelect, todos }) {
             <div className={styles.week} aria-label="日付と曜日">
                 {days.map((day) => {
                     const date = parseDate(day);
-                    const count = todos.filter((todo) => todo.date === day).length;
+                    const count = todos.filter((todo) => occursOn(todo, day)).length;
                     const weekday = new Intl.DateTimeFormat('ja-JP', { weekday: 'short' }).format(date);
                     return (
                         <button type="button" key={day} onClick={() => onSelect(day)}

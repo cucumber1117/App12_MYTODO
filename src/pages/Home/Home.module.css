@@ -21,6 +21,16 @@
 .periodMark { width: 8px; height: 8px; border: 2px solid var(--accent); border-radius: 50%; }
 .todoList { list-style: none; padding: 0; margin: 0; border-radius: 18px; overflow: hidden; background: white; box-shadow: 0 3px 14px #25355304; }
 .todoItem + .todoItem { border-top: 1px solid var(--border); }
+.todoItem { display: flex; align-items: center; }
+.checkArea { display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 48px; margin-left: 8px; cursor: pointer; }
+.checkArea input { width: 22px; height: 22px; accent-color: var(--accent); cursor: pointer; }
+.todoItem .todoContent { min-width: 0; flex: 1; padding-left: 8px; }
+.completed .todoText { text-decoration: line-through; color: var(--text); }
+.repeatBadge { display: block; font-size: .75rem; color: var(--text); font-weight: 400; }
+.weekdays { display: flex; flex-wrap: wrap; gap: 8px; border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
+.weekdays legend { font-size: .875rem; color: var(--text); }
+.weekdays label { display: flex; align-items: center; gap: 4px; min-height: 44px; margin: 0 !important; }
+.weekdays input { width: 18px; height: 18px; accent-color: var(--accent); }
 .todoContent { width: 100%; display: flex; align-items: center; gap: 18px; padding: 24px 20px; border: 0; background: transparent; text-align: left; color: inherit; }
 .todoContent:hover { background: #f8faff; }
 .todoContent:focus-visible { outline-offset: -3px; }

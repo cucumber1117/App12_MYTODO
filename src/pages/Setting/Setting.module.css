@@ -15,4 +15,11 @@
 .option input:checked { background: var(--accent); }
 .option input:checked::after { transform: translateX(20px); }
 .description { margin: 18px 4px 0; font-size: .875rem; color: var(--text); line-height: 1.8; }
+.recurring { margin-top: 40px; }
+.addRecurring { display: inline-block; padding: 12px 0; margin: 12px 0; color: var(--accent); text-decoration: none; }
+.recurringList { list-style: none; padding: 0; margin: 0; }
+.recurringList li { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px; margin-bottom: 10px; background: white; border-radius: 16px; }
+.recurringList strong { overflow-wrap: anywhere; }
+.recurringList p, .recurringList li > span { font-size: .875rem; color: var(--text); }
+.recurringList button { flex-shrink: 0; padding: 10px; min-height: 44px; border: 1px solid var(--border); border-radius: 10px; background: var(--code-bg); color: var(--text-h); }
 @media (max-width: 520px) { .page { padding: 32px 22px 130px; } .option { padding: 22px 18px; } }
